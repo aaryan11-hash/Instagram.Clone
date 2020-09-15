@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Model;
+package com.aaryan.Instagram.Clone.Domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

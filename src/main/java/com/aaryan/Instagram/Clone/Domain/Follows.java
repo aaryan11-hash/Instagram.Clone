@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Model;
+package com.aaryan.Instagram.Clone.Domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

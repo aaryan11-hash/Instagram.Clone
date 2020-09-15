@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Model;
+package com.aaryan.Instagram.Clone.Domain;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

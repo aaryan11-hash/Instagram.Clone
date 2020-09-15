@@ -1,9 +1,6 @@
-package com.aaryan.Instagram.Clone.Model;
+package com.aaryan.Instagram.Clone.Domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +8,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Setter
+@Getter
 @Data
 @Entity
 public class User {
@@ -25,7 +24,7 @@ public class User {
     @Column(columnDefinition = "varchar(20)",updatable = true)
     private String username;
 
-    @Column(columnDefinition = "varchar(40)",updatable = true)
+    @Column(columnDefinition = "varchar(100)",updatable = true)
     private String password;
 
     @Column(columnDefinition = "varchar(100)",updatable = true)
