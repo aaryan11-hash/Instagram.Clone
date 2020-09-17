@@ -20,5 +20,11 @@ public class AuthController {
         return ResponseEntity.accepted().build();
     }
 
+    @GetMapping("accountVerification/{token}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String token){
+
+        authService.verifyAccount(token);
+    }
+
 
 }

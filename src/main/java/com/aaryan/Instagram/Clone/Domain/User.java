@@ -3,6 +3,7 @@ package com.aaryan.Instagram.Clone.Domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 
 @AllArgsConstructor
@@ -29,6 +30,10 @@ public class User {
 
     @Column(columnDefinition = "varchar(100)",updatable = true)
     private String bio;
+
+    private Instant joinedDate;
+
+    private Boolean setEnabled;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<Post> userPosts;
