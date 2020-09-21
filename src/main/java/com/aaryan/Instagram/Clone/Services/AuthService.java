@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -54,7 +55,21 @@ public class AuthService {
 
 
     public void verifyAccount(String token) {
+        Optional<VerificationToken> verificationToken = verificationRepository.findByToken(token);
+        fetchUserAndEnable(verificationToken.orElseThrow(()->new RuntimeException("error fetching and authenticating user!!")));
 
+    }
 
+    private void fetchUserAndEnable(VerificationToken v) {
+        String username =v.getUser().getUsername();
+        User user =null;
+        try {
+            user = userRepository.findByUsername(username);
+        }catch(RuntimeException e){
+            System.out.println("error in finding the user!!");
+        }
+
+        user.setSetEnabled(true);
+        userRepository.save(user);
     }
 }

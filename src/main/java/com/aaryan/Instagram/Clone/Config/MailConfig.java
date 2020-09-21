@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
@@ -11,6 +14,7 @@ import java.util.Properties;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableAsync
 public class MailConfig {
 
     private final Environment environment;
@@ -33,5 +37,10 @@ public class MailConfig {
         session.setDebug(true);
 
         return session;
+    }
+
+    @Bean
+    public TaskExecutor taskExecutor(){
+        return new SimpleAsyncTaskExecutor();
     }
 }

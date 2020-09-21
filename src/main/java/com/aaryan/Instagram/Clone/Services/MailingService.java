@@ -2,6 +2,7 @@ package com.aaryan.Instagram.Clone.Services;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Message;
@@ -20,6 +21,7 @@ public class MailingService {
     private final Environment environment;
 
 
+    @Async
     public void sendAuthEmail(String to) {
 
         String tempToken = UUID.randomUUID().toString();
