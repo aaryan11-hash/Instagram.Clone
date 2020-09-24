@@ -1,5 +1,6 @@
 package com.aaryan.Instagram.Clone.Domain;
 
+import com.aaryan.Instagram.Clone.Domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

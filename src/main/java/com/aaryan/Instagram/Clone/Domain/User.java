@@ -1,53 +1,39 @@
 package com.aaryan.Instagram.Clone.Domain;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.Instant;
 import java.util.List;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Setter
-@Getter
 @Data
-@Entity
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @Column(columnDefinition = "varchar(60)",updatable = true)
-    private String email;
+    private String userBirthday;
 
-    @Column(columnDefinition = "varchar(20)",updatable = true)
-    private String username;
+    private String profilePictureUrl;
 
-    @Column(columnDefinition = "varchar(100)",updatable = true)
-    private String password;
+    private String firstName;
+    private String middleName;
+    private String lastName;
 
-    @Column(columnDefinition = "varchar(100)",updatable = true)
-    private String bio;
-
-    private Instant joinedDate;
-
-    private Boolean setEnabled;
+    private Boolean enabled;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Post> userPosts;
+    List<Post> posts;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Comments> userComments;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Follows> followers;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Follows> following;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    private List<Likes> likes;
+    @OneToOne(fetch = FetchType.EAGER)
+    AccountSettings accountSettings;
 
 }

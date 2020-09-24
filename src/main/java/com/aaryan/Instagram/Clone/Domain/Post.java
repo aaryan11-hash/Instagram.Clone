@@ -8,26 +8,41 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
+@Entity
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
-@Entity
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;
 
+    @Column(nullable = false)
+    private String postDate;
+
+    @Column(nullable = false)
+    private String imgUrl;
+
+    @Column(nullable = false)
     private String caption;
 
-    private String ImgUrl;
-
-    private String postCreattionDate;
-
     @ManyToOne(fetch = FetchType.EAGER)
-    private User userWhoPosted;
+    User user;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<Comments> comments;
+    public List<Likes> likeslist;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    public List<Comment> comments;
+
+    @OneToOne(fetch = FetchType.EAGER)
+    public Location location;
+
+    @OneToMany
+    public List<UserTag> usersTagged;
+
+    @ManyToMany
+    public List<Hashtag> hashtags;
 }

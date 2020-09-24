@@ -5,23 +5,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-@Entity
-public class Follows {
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long followid;
+    private Long locationId;
 
-    private Long userId;
-
+    @Column(nullable = true)
+    private String country;
+    @Column(nullable = true)
+    private String state;
+    @Column(nullable = true)
+    private String city;
 
 }
