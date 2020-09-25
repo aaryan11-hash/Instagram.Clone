@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class PostDto {
+public class PostResponseDto {
 
     private Long postId;
 
