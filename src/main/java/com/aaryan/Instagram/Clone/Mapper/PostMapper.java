@@ -1,6 +1,9 @@
 package com.aaryan.Instagram.Clone.Mapper;
 
-import com.aaryan.Instagram.Clone.Domain.*;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Hashtag;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Likes;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Post;
+import com.aaryan.Instagram.Clone.Domain.RealTime.UserTag;
 import com.aaryan.Instagram.Clone.Model.PostResponseDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

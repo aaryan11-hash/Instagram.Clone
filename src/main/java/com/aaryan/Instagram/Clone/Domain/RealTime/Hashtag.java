@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Domain;
+package com.aaryan.Instagram.Clone.Domain.RealTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,20 +6,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class UserTag {
+public class Hashtag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userTagId;
+    private Long hashtagId;
 
-    private String userWhoWasTagged;
+    private String hashtag;
 
-    @ManyToOne
-    private Post post;
+    @ManyToMany(fetch = FetchType.LAZY)
+    List<Post> posts;
 }

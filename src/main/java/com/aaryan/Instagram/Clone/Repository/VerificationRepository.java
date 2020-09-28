@@ -1,6 +1,6 @@
 package com.aaryan.Instagram.Clone.Repository;
 
-import com.aaryan.Instagram.Clone.Domain.VerificationToken;
+import com.aaryan.Instagram.Clone.Domain.RealTime.VerificationToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

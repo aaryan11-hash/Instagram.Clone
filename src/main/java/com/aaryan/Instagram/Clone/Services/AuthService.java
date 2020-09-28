@@ -1,8 +1,8 @@
 package com.aaryan.Instagram.Clone.Services;
 
-import com.aaryan.Instagram.Clone.Domain.AccountSettings;
-import com.aaryan.Instagram.Clone.Domain.User;
-import com.aaryan.Instagram.Clone.Domain.VerificationToken;
+import com.aaryan.Instagram.Clone.Domain.RealTime.AccountSettings;
+import com.aaryan.Instagram.Clone.Domain.RealTime.User;
+import com.aaryan.Instagram.Clone.Domain.RealTime.VerificationToken;
 import com.aaryan.Instagram.Clone.Model.AuthenticationResponse;
 import com.aaryan.Instagram.Clone.Model.LoginRequest;
 import com.aaryan.Instagram.Clone.Model.RefreshTokenRequest;

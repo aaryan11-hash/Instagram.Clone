@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Domain;
+package com.aaryan.Instagram.Clone.Domain.RealTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,17 +12,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class Location {
+public class UserTag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long locationId;
+    private Long userTagId;
 
-    @Column(nullable = true)
-    private String country;
-    @Column(nullable = true)
-    private String state;
-    @Column(nullable = true)
-    private String city;
+    private String userWhoWasTagged;
 
+    @ManyToOne
+    private Post post;
 }

@@ -1,7 +1,7 @@
 package com.aaryan.Instagram.Clone.Model;
 
 
-import com.aaryan.Instagram.Clone.Domain.Location;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Location;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

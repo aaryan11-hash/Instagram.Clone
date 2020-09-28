@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Domain;
+package com.aaryan.Instagram.Clone.Domain.RealTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,21 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class Hashtag {
+public class CommentLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long hashtagId;
+    private Long commentLikeId;
 
-    private String hashtag;
+    private String commentLikeDate;
 
-    @ManyToMany
-    List<Post> posts;
+    private Long userWhoLikedTheCCommentId;
+
+    private Long userWhoCommentedId;
+
+    @ManyToOne
+    Comment comment;
 }

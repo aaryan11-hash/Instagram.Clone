@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Domain;
+package com.aaryan.Instagram.Clone.Domain.RealTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +28,8 @@ public class Post {
     @Column(nullable = false)
     private String caption;
 
+    private Boolean processing;
+
     @ManyToOne(fetch = FetchType.EAGER)
     User user;
 
@@ -45,4 +47,6 @@ public class Post {
 
     @ManyToMany
     public List<Hashtag> hashtags;
+
+
 }

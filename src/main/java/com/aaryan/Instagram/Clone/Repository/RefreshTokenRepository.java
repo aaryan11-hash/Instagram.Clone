@@ -1,7 +1,7 @@
 package com.aaryan.Instagram.Clone.Repository;
 
 
-import com.aaryan.Instagram.Clone.Domain.RefreshToken;
+import com.aaryan.Instagram.Clone.Domain.RealTime.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

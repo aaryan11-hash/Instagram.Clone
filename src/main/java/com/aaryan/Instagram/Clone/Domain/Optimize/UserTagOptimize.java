@@ -1,5 +1,6 @@
-package com.aaryan.Instagram.Clone.Domain;
+package com.aaryan.Instagram.Clone.Domain.Optimize;
 
+import com.aaryan.Instagram.Clone.Domain.RealTime.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,18 +13,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Data
-public class CommentLike {
+public class UserTagOptimize {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long commentLikeId;
+    private Long userTagId;
 
-    private String commentLikeDate;
+    private String userWhoWasTagged;
 
-    private Long userWhoLikedTheCCommentId;
 
-    private Long userWhoCommentedId;
-
-    @ManyToOne
-    Comment comment;
 }

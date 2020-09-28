@@ -1,16 +1,24 @@
 package com.aaryan.Instagram.Clone.Services;
 
-import com.aaryan.Instagram.Clone.Domain.Hashtag;
-import com.aaryan.Instagram.Clone.Domain.Location;
-import com.aaryan.Instagram.Clone.Domain.Post;
-import com.aaryan.Instagram.Clone.Domain.User;
+import com.aaryan.Instagram.Clone.Domain.Optimize.HashtagOptimize;
+import com.aaryan.Instagram.Clone.Domain.Optimize.UnprocessedPosts;
+import com.aaryan.Instagram.Clone.Domain.Optimize.UserTagOptimize;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Hashtag;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Location;
+import com.aaryan.Instagram.Clone.Domain.RealTime.Post;
+import com.aaryan.Instagram.Clone.Domain.RealTime.User;
 import com.aaryan.Instagram.Clone.Mapper.PostMapper;
 import com.aaryan.Instagram.Clone.Model.PostRequestDto;
 import com.aaryan.Instagram.Clone.Model.PostResponseDto;
+import com.aaryan.Instagram.Clone.Repository.DomainRelated.PostRepository;
 import com.aaryan.Instagram.Clone.Repository.HashTagRepository;
+import com.aaryan.Instagram.Clone.Repository.OptimizationRelated.HashTagRepositoryOP;
+import com.aaryan.Instagram.Clone.Repository.OptimizationRelated.UnprocPostRepository;
+import com.aaryan.Instagram.Clone.Repository.OptimizationRelated.UserTagRepositoryOP;
 import com.aaryan.Instagram.Clone.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +36,10 @@ public class PostService {
     private final PostMapper postMapper;
     private final AuthService authService;
     private final HashTagRepository hashTagRepository;
+    private final PostRepository postRepository;
+    private final HashTagRepositoryOP hashTagRepositoryOP;
+    private final UserTagRepositoryOP userTagRepositoryOP;
+    private final UnprocPostRepository unprocPostRepository;
 
     @Transactional
     public List<PostResponseDto> getAllCurrentUserPosts(){
@@ -59,18 +71,32 @@ public class PostService {
                         .state(postRequestDto.getState())
                         .country(postRequestDto.getCity())
                         .build())
-                .hashtags(processHashTag(postRequestDto.getHashtags())
+                .processing(false)
+                .build();
 
-        //todo incomplete
 
+        postRepository.save(post);
+
+        UnprocessedPosts unprocessedPosts = UnprocessedPosts.builder()
+                .hashtags(postRequestDto.getHashtags().stream()
+                            .map(r->hashTagRepositoryOP.save(HashtagOptimize.builder().hashtag(r).build()))
+                        .collect(toList()))
+                .usersTagged(postRequestDto.getTaggedUser().stream()
+                            .map(u->userTagRepositoryOP.save(UserTagOptimize.builder().userWhoWasTagged(u).build()))
+                .collect(toList()))
+                .time(Instant.now().toEpochMilli())
+                .build();
+
+        unprocPostRepository.save(unprocessedPosts);
 
     }
 
-    public List<Hashtag> processHashTag(List<String> hastags){
+    @Scheduled(fixedDelay = 100000)
+    public void processNewlySavedPosts(){
+        List<Post> postList = postRepository.getAllByProcessingIsFalse();
+        List<UnprocessedPosts> unprocessedPostsList = unprocPostRepository.getAllByTimeOrderByTimeDesc();
 
-
-        //todo incomplete
-        return null;
+        //todo this function will do the finishing job of linking the hashtags,users tags in a post and the post itself...
     }
 
 }
