@@ -1,7 +1,7 @@
 package com.aaryan.Instagram.Clone.Services;
 
 import com.aaryan.Instagram.Clone.Domain.RealTime.User;
-import com.aaryan.Instagram.Clone.Repository.UserRepository;
+import com.aaryan.Instagram.Clone.Repository.DomainRelated.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

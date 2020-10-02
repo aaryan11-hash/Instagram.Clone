@@ -21,7 +21,7 @@ public class AccountDetailDto {
     private Boolean commercial;
     private Boolean notifications;
 
-    private String birthday;
+
 
 
 }

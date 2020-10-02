@@ -1,7 +1,7 @@
 package com.aaryan.Instagram.Clone.Services;
 
 import com.aaryan.Instagram.Clone.Domain.RealTime.RefreshToken;
-import com.aaryan.Instagram.Clone.Repository.RefreshTokenRepository;
+import com.aaryan.Instagram.Clone.Repository.DomainRelated.RefreshTokenRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

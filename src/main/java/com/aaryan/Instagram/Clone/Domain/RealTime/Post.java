@@ -28,7 +28,11 @@ public class Post {
     @Column(nullable = false)
     private String caption;
 
+    @Column(nullable = true)
     private Boolean processing;
+
+    @Column(nullable = true)
+    private Boolean taggedUserNotification;
 
     @ManyToOne(fetch = FetchType.EAGER)
     User user;
@@ -42,10 +46,11 @@ public class Post {
     @OneToOne(fetch = FetchType.EAGER)
     public Location location;
 
-    @OneToMany
+
+    @OneToMany(fetch = FetchType.LAZY)
     public List<UserTag> usersTagged;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     public List<Hashtag> hashtags;
 
 

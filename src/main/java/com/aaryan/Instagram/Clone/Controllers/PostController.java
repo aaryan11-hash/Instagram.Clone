@@ -1,5 +1,6 @@
 package com.aaryan.Instagram.Clone.Controllers;
 
+import com.aaryan.Instagram.Clone.Domain.RealTime.Post;
 import com.aaryan.Instagram.Clone.Model.PostRequestDto;
 import com.aaryan.Instagram.Clone.Model.PostResponseDto;
 import com.aaryan.Instagram.Clone.Services.PostService;
@@ -39,6 +40,12 @@ public class PostController {
     @GetMapping("/SpecificUser/{userId}/SearchBtn")
     public void fetchUserPreferencePosts(@PathVariable Long userId){
 
+    }
+
+    @GetMapping("/notification/PostLink/{postId}")
+    public ResponseEntity<Post> sendDataforNotificationLinkToPost(@PathVariable("postId") Long postId){
+
+        return new ResponseEntity(postService.getSpecificPostFromSpecificUser(postId),HttpStatus.FOUND);
     }
 
 

@@ -20,6 +20,5 @@ public class UserTag {
 
     private String userWhoWasTagged;
 
-    @ManyToOne
-    private Post post;
+
 }

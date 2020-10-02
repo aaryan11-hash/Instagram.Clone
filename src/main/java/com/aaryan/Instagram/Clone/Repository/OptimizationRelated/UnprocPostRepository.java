@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface UnprocPostRepository extends JpaRepository<UnprocessedPosts,Long> {
 
-    List<UnprocessedPosts> getAllByTimeOrderByTimeDesc();
+
 }

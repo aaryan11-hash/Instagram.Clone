@@ -1,5 +1,8 @@
 package com.aaryan.Instagram.Clone.Services;
 
+import com.aaryan.Instagram.Clone.Domain.RealTime.User;
+import com.aaryan.Instagram.Clone.Domain.RealTime.UserTag;
+import com.aaryan.Instagram.Clone.Repository.DomainRelated.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Async;
@@ -19,6 +22,8 @@ public class MailingService {
 
     private final Session session;
     private final Environment environment;
+
+    private final UserRepository userRepository;
 
 
     @Async
@@ -49,5 +54,33 @@ public class MailingService {
 
         }
 
+    }
+
+    @Async
+    public void sendNotificationToTaggedUser(UserTag userTagged, User userWhoPosted ,Long postId){
+
+        User taggeduserObject = userRepository.getByAccountSettings_Username(userTagged.getUserWhoWasTagged());
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(environment.getProperty("server.adminMailSender.email")));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(taggeduserObject.getAccountSettings().getEmail()));
+            message.setSubject("New Post Tag Email");
+            message.setText("Dear Customer,"
+                    + "\n\n You were tagged by"+userWhoPosted.getAccountSettings().getUsername()
+                    + "\n\n" + "click this link to go to the post {this part will redirect to the front end where userId of the user who posted and the postId to which the mailed user was tagged in will be sent..}");
+
+
+            Transport.send(message);
+
+
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+
+
+        }
     }
 }

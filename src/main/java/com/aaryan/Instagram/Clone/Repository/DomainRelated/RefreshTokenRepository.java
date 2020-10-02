@@ -1,4 +1,4 @@
-package com.aaryan.Instagram.Clone.Repository;
+package com.aaryan.Instagram.Clone.Repository.DomainRelated;
 
 
 import com.aaryan.Instagram.Clone.Domain.RealTime.RefreshToken;

@@ -23,5 +23,7 @@ public class HashtagOptimize {
 
     private String hashtag;
 
+    private Long postId;
+
 
 }
