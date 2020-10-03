@@ -19,6 +19,6 @@ public interface UserAccMapper {
 
     UserAccountResponseDto convertToUserAccountDto(User user);
 
-
+    User connvertToUserDomainObject(AccountDetailDto accountDetailDto);
 
 }

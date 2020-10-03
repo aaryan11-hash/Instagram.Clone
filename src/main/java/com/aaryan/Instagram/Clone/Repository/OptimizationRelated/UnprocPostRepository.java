@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
+@Deprecated
 public interface UnprocPostRepository extends JpaRepository<UnprocessedPosts,Long> {
 
 
