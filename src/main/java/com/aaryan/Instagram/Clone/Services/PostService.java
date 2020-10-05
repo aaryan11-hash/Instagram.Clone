@@ -14,6 +14,7 @@ import com.aaryan.Instagram.Clone.Repository.OptimizationRelated.UnprocPostRepos
 import com.aaryan.Instagram.Clone.Repository.OptimizationRelated.UserTagRepositoryOP;
 import com.aaryan.Instagram.Clone.Repository.DomainRelated.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
+@val
 public class PostService {
 
     private final MailingService mailingService;
@@ -114,10 +116,10 @@ public class PostService {
     @Async
     public void processNewlySavedPosts(){
 
-        List<Hashtag> newHashTags = new ArrayList<>();
+        val newHashTags = new ArrayList<Hashtag>();
 
-        List<Hashtag> hashtagList = hashTagRepository.findAll();
-        List<HashtagOptimize> hashtagOptimizeList = hashTagRepositoryOP.findAll();
+        val hashtagList = hashTagRepository.findAll();
+        val hashtagOptimizeList = hashTagRepositoryOP.findAll();
 
 
 
@@ -177,7 +179,7 @@ public class PostService {
     }
 
     private void processUserNotification() {
-        List<Post> posts = postRepository.getPostByTaggedUserNotificationIsFalseAndProcessingIsTrue();
+        val posts = postRepository.getPostByTaggedUserNotificationIsFalseAndProcessingIsTrue();
 
         posts.stream()
                 .forEach(post -> {post.getUsersTagged().stream().forEach(r->{mailingService.sendNotificationToTaggedUser(r,post.getUser(),post.getPostId());});});

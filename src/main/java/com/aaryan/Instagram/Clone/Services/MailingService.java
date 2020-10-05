@@ -83,4 +83,34 @@ public class MailingService {
 
         }
     }
+
+    @Async
+    public void sendPasswordChangeNotification(User user,String oldPassword,String newPassword){
+
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(environment.getProperty("server.adminMailSender.email")));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(taggeduserObject.getAccountSettings().getEmail()));
+            message.setSubject("Password Change");
+            message.setText("Dear Customer,"
+                    + "\n\n You recently changed your password from"+oldPassword+" to: "+newPassword
+                    //todo  :::: the given link endpoints have to be created ::::
+                    //todo  :::: second database has to be created for the saving of the temp password change that happens in such transactions ::::
+                    + "\nplease confirm your action by clicking this link : http://localhost/account/setting/{"+user.getUserId()+"}/confirmAction"
+                    + "\nnot you? please click this link : http://localhost/account/setting/{"+user.getUserId()+"}/revertAction");
+
+            Transport.send(message);
+
+
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+
+
+        }
+
+    }
 }
