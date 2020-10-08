@@ -93,7 +93,7 @@ public class MailingService {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(environment.getProperty("server.adminMailSender.email")));
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(taggeduserObject.getAccountSettings().getEmail()));
+                    InternetAddress.parse(user.getAccountSettings().getEmail()));
             message.setSubject("Password Change");
             message.setText("Dear Customer,"
                     + "\n\n You recently changed your password from"+oldPassword+" to: "+newPassword

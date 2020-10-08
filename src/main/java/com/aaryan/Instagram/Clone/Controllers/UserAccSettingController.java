@@ -28,14 +28,20 @@ public class UserAccSettingController {
         @PostMapping("/profile/UpdateUserInfo/Misseleneous")
         public ResponseEntity<String> updateUserProfileInfo(@RequestBody AccountDetailDto accountDetailDto){
 
-            val result = accountSettingService.changeUpdateDetail(accountDetailDto);
-            return new ResponseEntity<>(result,HttpStatus.OK);
+            return new ResponseEntity<>(accountSettingService.changeUpdateDetail(accountDetailDto),HttpStatus.OK);
         }
 
         @PostMapping("/profile/UpdateUserInfo/Important")
         public ResponseEntity<String> updateUserCrucialInfo(@RequestBody AccountDetailDto accountDetailDto){
 
-            val result = accountSettingService.changeUserCrucialData(accountDetailDto);
+            return new ResponseEntity<>(accountSettingService.changeUserCrucialDataforPassword(accountDetailDto),HttpStatus.OK);
+        }
+
+        @GetMapping("/{username}/confirmAction")
+        public ResponseEntity<String> confirmPasswordChangeAction(@PathVariable String userId){
+
+
+            return ResponseEntity.ok().body( accountSettingService.confirmPasswordChange(userId));
         }
 
 }
