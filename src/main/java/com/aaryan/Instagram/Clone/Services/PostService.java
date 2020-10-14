@@ -33,7 +33,6 @@ public class PostService {
 
     private final MailingService mailingService;
     private final PostMapper postMapper;
-
     private final UserRepository userRepository;
     private final AuthService authService;
     private final HashTagRepository hashTagRepository;
@@ -50,6 +49,7 @@ public class PostService {
     .stream()
             .map(postMapper::PostToPostDto).collect(toList());
     }
+
 
     @Transactional
     public List<PostResponseDto> getASpecificUserPosts(Long userId){
@@ -105,9 +105,6 @@ public class PostService {
                             .map(u-> userTagRepositoryOP.save(UserTagOptimize.builder().userWhoWasTagged(u).build()));
 
 
-
-
-        //unprocPostRepository.save(unprocessedPosts);
 
     }
 
@@ -171,12 +168,9 @@ public class PostService {
 
             processUserNotification();
 
-
-
-
-
-        //todo this function will do the finishing job of linking the hashtags,users tags in a post and the post itself...
+            //todo this function will do the finishing job of linking the hashtags,users tags in a post and the post itself...
     }
+
 
     private void processUserNotification() {
         val posts = postRepository.getPostByTaggedUserNotificationIsFalseAndProcessingIsTrue();
