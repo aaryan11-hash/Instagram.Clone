@@ -1,9 +1,6 @@
 package com.aaryan.Instagram.Clone.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.Instant;
 
@@ -11,6 +8,8 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Getter
+@Setter
 public class AuthenticationResponse {
     private String authenticationToken;
     private String refreshToken;

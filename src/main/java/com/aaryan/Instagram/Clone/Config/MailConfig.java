@@ -39,25 +39,6 @@ public class MailConfig {
         return session;
     }
 
-    @Bean
-    public Session session2(){
-
-        Properties props = new Properties();
-        props.put("mail.smtp.auth1101", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.ports1123", "587");
-
-        Session session = Session.getInstance(props,
-                new javax.mail.Authenticator() {
-                    protected javax.mail.PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(environment.getProperty("server.adminMailSender.email"),environment.getProperty("server.adminMailSender.password"));
-                    }
-                });
-        session.setDebug(true);
-
-        return session;
-    }
 
     @Bean
     public TaskExecutor taskExecutor(){

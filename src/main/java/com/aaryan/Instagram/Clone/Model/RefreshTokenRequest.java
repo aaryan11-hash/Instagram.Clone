@@ -1,14 +1,14 @@
 package com.aaryan.Instagram.Clone.Model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class RefreshTokenRequest {
     @NotBlank
     private String refreshToken;

@@ -1,9 +1,6 @@
 package com.aaryan.Instagram.Clone.Domain.Confirmation;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.persistence.Entity;
@@ -16,7 +13,9 @@ import java.time.Instant;
 @Data
 @Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
 public class PasswordChange {
 
     @Id
@@ -24,7 +23,7 @@ public class PasswordChange {
     private Long passId;
 
     private String password;
-    private String username;
+    private Long userId;
 
     private Instant passwordChangeInvokedAt;
 }

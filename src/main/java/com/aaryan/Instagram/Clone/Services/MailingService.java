@@ -99,8 +99,37 @@ public class MailingService {
                     + "\n\n You recently changed your password from"+oldPassword+" to: "+newPassword
                     //todo  :::: the given link endpoints have to be created ::::
                     //todo  :::: second database has to be created for the saving of the temp password change that happens in such transactions ::::
-                    + "\nplease confirm your action by clicking this link : http://localhost/account/setting/{"+user.getUserId()+"}/confirmAction"
-                    + "\nnot you? please click this link : http://localhost/account/setting/{"+user.getUserId()+"}/revertAction");
+                    + "\nplease confirm your action by clicking this link : http://localhost/account/setting/{"+user.getUserId()+"}/confirmAction/password"
+                    + "\nnot you? please click this link : http://localhost/account/setting/password/{"+user.getUserId()+"}/revertAction");
+
+            Transport.send(message);
+
+
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+
+
+        }
+
+    }
+
+    @Async
+    public void sendEmailChangedNotification(User user, String oldEmail, String newEmail) {
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(environment.getProperty("server.adminMailSender.email")));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(newEmail));
+            message.setSubject("Email Change");
+            message.setText("Dear Customer,"
+                    + "\n\n You recently changed your email from"+oldEmail+" to: "+newEmail
+                    //todo  :::: the given link endpoints have to be created ::::
+                    //todo  :::: second database has to be created for the saving of the temp password change that happens in such transactions ::::
+                    + "\nplease confirm your action by clicking this link : http://localhost/account/setting/{"+user.getUserId()+"}/confirmAction/email"
+                    + "\nnot you? please click this link : http://localhost/account/setting/email/{"+user.getUserId()+"}/revertAction");
 
             Transport.send(message);
 

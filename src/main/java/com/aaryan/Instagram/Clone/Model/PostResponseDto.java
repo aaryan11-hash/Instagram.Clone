@@ -2,15 +2,15 @@ package com.aaryan.Instagram.Clone.Model;
 
 
 import com.aaryan.Instagram.Clone.Domain.RealTime.Location;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @AllArgsConstructor
 @Builder
 @Data
+@Getter
+@Setter
 public class PostResponseDto {
 
     private Long postId;

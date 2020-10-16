@@ -37,11 +37,28 @@ public class UserAccSettingController {
             return new ResponseEntity<>(accountSettingService.changeUserCrucialDataforPassword(accountDetailDto),HttpStatus.OK);
         }
 
-        @GetMapping("/{username}/confirmAction")
-        public ResponseEntity<String> confirmPasswordChangeAction(@PathVariable String userId){
-
+        @GetMapping("/{userId}/confirmAction/password")
+        public ResponseEntity<String> confirmPasswordChangeAction(@PathVariable Long userId){
 
             return ResponseEntity.ok().body( accountSettingService.confirmPasswordChange(userId));
+        }
+
+        @GetMapping("/{userId}/confirmAction/email")
+        public ResponseEntity<String> confirmEmailChangeAction(@PathVariable Long userId){
+
+            return ResponseEntity.ok().body(accountSettingService.confirmEmailChange(userId));
+        }
+
+        @GetMapping("/password/{userId}/revertAction")
+        public ResponseEntity<String> revertPasswordChange(@PathVariable Long userId){
+
+            return ResponseEntity.ok().body(accountSettingService.revertNewPasswordChange(userId));
+        }
+
+        @GetMapping("/email/{userId}/revertAction")
+        public ResponseEntity<String> revertEmailChange(@PathVariable Long userId){
+
+            return ResponseEntity.ok().body(accountSettingService.revertNewEmailChange(userId));
         }
 
 }

@@ -1,10 +1,7 @@
 package com.aaryan.Instagram.Clone.Model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -12,6 +9,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
+@Getter
+@Setter
 public class PostRequestDto {
 
     private Long userId;

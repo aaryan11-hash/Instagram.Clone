@@ -1,9 +1,13 @@
 package com.aaryan.Instagram.Clone.Services;
 
+import com.aaryan.Instagram.Clone.Domain.Confirmation.EmailChange;
 import com.aaryan.Instagram.Clone.Domain.Confirmation.PasswordChange;
+import com.aaryan.Instagram.Clone.Domain.RealTime.AccountSettings;
+import com.aaryan.Instagram.Clone.Domain.RealTime.User;
 import com.aaryan.Instagram.Clone.Mapper.UserAccMapper;
 import com.aaryan.Instagram.Clone.Model.AccountDetailDto;
 import com.aaryan.Instagram.Clone.Model.UserAccountResponseDto;
+import com.aaryan.Instagram.Clone.Repository.Confirmation.EmailChangeRepository;
 import com.aaryan.Instagram.Clone.Repository.Confirmation.PasswordChangeRepository;
 import com.aaryan.Instagram.Clone.Repository.DomainRelated.AccountSettingRepository;
 import com.aaryan.Instagram.Clone.Repository.DomainRelated.UserRepository;
@@ -26,6 +30,7 @@ public class AccountSettingService {
     private final UserRepository userRepository;
     private final PasswordChangeRepository passwordChangeRepository;
     private final AccountSettingRepository accountSettingRepository;
+    private final EmailChangeRepository emailChangeRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -37,7 +42,7 @@ public class AccountSettingService {
     @Transactional
     public String  changeUpdateDetail(AccountDetailDto accountDetailDto) {
 
-        val user = userRepository.getOne(authService.getCurrentUser().getUserId());
+        User user = authService.getCurrentUser();
 
         if(accountDetailDto.getNewFirstName()!=null)
             user.setFirstName(accountDetailDto.getNewFirstName());
@@ -63,31 +68,56 @@ public class AccountSettingService {
 
     @Transactional
     public String changeUserCrucialDataforPassword(AccountDetailDto accountDetailDto) {
+        val currentUser = (User)userRepository.getOne(authService.getCurrentUser().getUserId());
 
-        val currentUser = userRepository.getOne(authService.getCurrentUser().getUserId());
-        var oldPassword = currentUser.getAccountSettings().getPassword();
-        var newPassword = accountDetailDto.getNewPassword();
+        if(accountDetailDto.getNewEmail().isEmpty()){
 
-        val passwordChange  = PasswordChange.builder()
-                .password(accountDetailDto.getNewPassword())
-                .username(currentUser.getAccountSettings().getUsername())
-                .passwordChangeInvokedAt(Instant.now());
+            var oldPassword = currentUser.getAccountSettings().getPassword();
+            var newPassword = accountDetailDto.getNewPassword();
 
+            val passwordChange  = (PasswordChange)PasswordChange.builder()
+                    .password(accountDetailDto.getNewPassword())
+                    .userId(currentUser.getUserId())
+                    .passwordChangeInvokedAt(Instant.now()).build();
 
+               passwordChangeRepository.save(passwordChange);
 
-        //todo further thinking has to be put in to this function to tackle the issue of security and data roll back scenarios;
+            //todo further thinking has to be put in to this function to tackle the issue of security and data roll back scenarios;
 
             mailingService.sendPasswordChangeNotification(currentUser,oldPassword,newPassword);
 
-        return "temp new password saved successfully";
+            return "Password Changed Object Saved";
+        }
+
+        else if(accountDetailDto.getNewPassword().isEmpty()){
+
+            var oldEmail = currentUser.getAccountSettings().getEmail();
+            var newEmail = accountDetailDto.getNewEmail();
+
+            val emailChange = (EmailChange)EmailChange.builder()
+                    .oldEmail(currentUser.getAccountSettings().getEmail())
+                    .newEmail(accountDetailDto.getNewEmail())
+                    .userId(currentUser.getUserId())
+                    .build();
+
+            emailChangeRepository.save(emailChange);
+
+            mailingService.sendEmailChangedNotification(currentUser,oldEmail,newEmail);
+
+            return "Email Change object Saved";
+        }
+
+            return "something went wrong";
     }
 
-    @Transactional
-    public String confirmPasswordChange(String username) {
 
-        val confirmed = passwordChangeRepository.getByUsername(username);
-        val user = userRepository.getOne(authService.getCurrentUser().getUserId());
-        val accountSettings = user.getAccountSettings();
+
+    @Transactional
+    public String confirmPasswordChange(Long userId) {
+
+        val confirmed = (PasswordChange)passwordChangeRepository.getByUserId(userId);
+        val user = (User)authService.getCurrentUser();
+        val accountSettings = (AccountSettings)user.getAccountSettings();
 
         accountSettings.setPassword(passwordEncoder.encode(confirmed.getPassword()));
         accountSettingRepository.save(accountSettings);
@@ -96,5 +126,36 @@ public class AccountSettingService {
 
 
         return "Password Changed";
+    }
+
+    @Transactional
+    public String confirmEmailChange(Long userId){
+
+        val confirmed = emailChangeRepository.getByUserId(userId);
+        val user = authService.getCurrentUser();
+        val accountSettings =(AccountSettings) user.getAccountSettings();
+
+        accountSettings.setEmail(confirmed.getNewEmail());
+        accountSettingRepository.save(accountSettings);
+        user.setAccountSettings(accountSettings);
+        userRepository.save(user);
+
+        return "Email Changed";
+    }
+
+    public String revertNewPasswordChange(Long userId) {
+
+        val revertPasswordChange = passwordChangeRepository.getByUserId(userId);
+        passwordChangeRepository.delete(revertPasswordChange);
+
+        return "New Password Entity Deleted";
+    }
+
+    public String revertNewEmailChange(Long userId) {
+
+        val revertEmailChange = emailChangeRepository.getByUserId(userId);
+        emailChangeRepository.delete(revertEmailChange);
+
+        return "New Email Entity Deleted";
     }
 }

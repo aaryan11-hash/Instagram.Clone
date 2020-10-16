@@ -1,10 +1,7 @@
 package com.aaryan.Instagram.Clone.Domain.RealTime;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
+@Getter
+@Setter
 public class User {
 
     @Id

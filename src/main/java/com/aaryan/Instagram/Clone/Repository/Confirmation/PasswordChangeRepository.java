@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PasswordChangeRepository extends JpaRepository<PasswordChange,Long> {
 
     PasswordChange getByUserId(Long userId);
-    PasswordChange getByUsername(String username);
+
 }
