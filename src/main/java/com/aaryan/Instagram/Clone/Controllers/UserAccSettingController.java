@@ -61,4 +61,7 @@ public class UserAccSettingController {
             return ResponseEntity.ok().body(accountSettingService.revertNewEmailChange(userId));
         }
 
+        @GetMapping("user/folllow/request/toUser")
+        public ResponseEntity<void> confirmRequestSentToUser
+
 }
