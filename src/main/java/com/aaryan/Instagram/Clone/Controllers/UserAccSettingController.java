@@ -11,7 +11,7 @@ import lombok.val;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+//ignore commit
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/account/setting")
